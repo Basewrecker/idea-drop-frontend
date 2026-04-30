@@ -48,7 +48,7 @@ function NewIdeaPage() {
         </h1>
     
     </div>
-    <form className='space-y-2'>
+    <form onSubmit={handleSubmit} className='space-y-2'>
         <div>
             <label htmlFor='title' className='block text-gray-700 font-medium mb-1'>
                 Title

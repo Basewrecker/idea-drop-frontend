@@ -1,27 +1,28 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { Lightbulb } from 'lucide-react'
-import { fetchIdeas } from '#/api/ideas'
-import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
-import IdeaCard from '#/components/IdeaCard'
+import { createFileRoute } from "@tanstack/react-router";
+import { Lightbulb } from "lucide-react";
+import { fetchIdeas } from "#/api/ideas";
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import IdeaCard from "#/components/IdeaCard";
 
 const ideasQueryOptions = queryOptions({
-  queryKey: ['ideas'],
+  queryKey: ["ideas"],
   queryFn: fetchIdeas,
-})
+});
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute("/")({
   component: HomePage,
-  loader: ({ context }) => context.queryClient.ensureQueryData(ideasQueryOptions),
-})
+  loader: ({ context }) =>
+    context.queryClient.ensureQueryData(ideasQueryOptions),
+});
 
 function HomePage() {
-  const { data: ideas } = useSuspenseQuery(ideasQueryOptions)
+  const { data: ideas } = useSuspenseQuery(ideasQueryOptions);
   const latestIdeas = [...ideas]
     .sort(
       (a, b) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
     )
-    .slice(0, 3)
+    .slice(0, 3);
 
   return (
     <div className="flex flex-col md:flex-row items-start justify-between gap-10 p-6">
@@ -41,10 +42,10 @@ function HomePage() {
         </h2>
         <ul className="space-y-6">
           {latestIdeas.map((idea) => (
-            <IdeaCard key={idea.id} idea={idea} button={false} />
+            <IdeaCard key={idea._id} idea={idea} button={false} />
           ))}
         </ul>
       </section>
     </div>
-  )
+  );
 }

@@ -1,28 +1,37 @@
-import { defineConfig } from 'vite'
-import { devtools } from '@tanstack/devtools-vite'
+import { defineConfig } from "vite";
+import { devtools } from "@tanstack/devtools-vite";
 
-import { tanstackRouter } from '@tanstack/router-plugin/vite'
+import { tanstackRouter } from "@tanstack/router-plugin/vite";
 
-import viteReact from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import viteReact from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 
-const config = defineConfig({
-  resolve: { tsconfigPaths: true },
-  plugins: [
-    devtools(),
-    tailwindcss(),
-    tanstackRouter({ target: 'react', autoCodeSplitting: true }),
-    viteReact(),
-  ],
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:8000',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/,'')
-      }
-    }
-  }
-})
+const config = defineConfig(() => {
+  const proxyTarget =
+    process.env.VITE_API_PROXY_TARGET || "http://localhost:9000";
+  const stripApiPrefix =
+    process.env.VITE_API_PROXY_STRIP_PREFIX === "true";
 
-export default config
+  return {
+    resolve: { tsconfigPaths: true },
+    plugins: [
+      devtools(),
+      tailwindcss(),
+      tanstackRouter({ target: "react", autoCodeSplitting: true }),
+      viteReact(),
+    ],
+    server: {
+      proxy: {
+        "/api": {
+          target: proxyTarget,
+          changeOrigin: true,
+          rewrite: stripApiPrefix
+            ? (path) => path.replace(/^\/api/, "")
+            : undefined,
+        },
+      },
+    },
+  };
+});
+
+export default config;

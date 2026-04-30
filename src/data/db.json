@@ -58,6 +58,17 @@
         "ai"
       ],
       "createdAt": "2025-04-24T13:10:00.000Z"
+    },
+    {
+      "title": "New Idea",
+      "summary": "Idea 1",
+      "description": "THis is just a test",
+      "tags": [
+        "Work",
+        "dev"
+      ],
+      "createdAt": "2026-04-30T07:56:39.890Z",
+      "id": "gLEeKMpVwdI"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
