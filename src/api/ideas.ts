@@ -16,8 +16,10 @@ const normalizeIdea = (idea: IdeaApiResponse): Idea => ({
   user: idea.user ?? "",
 });
 
-export const fetchIdeas = async (): Promise<Idea[]> => {
-  const res = await api.get("/ideas");
+export const fetchIdeas = async (limit?: number): Promise<Idea[]> => {
+  const res = await api.get("/ideas", {
+    params: limit ? { _limit: limit } : {},
+  });
   return Array.isArray(res.data) ? res.data.map(normalizeIdea) : [];
 };
 
@@ -31,25 +33,28 @@ export const createIdea = async (newIdea: {
   summary: string;
   description: string;
   tags: string[];
-}):Promise<Idea> => {
-  const res = await api.post('/ideas/', {
+}): Promise<Idea> => {
+  const res = await api.post("/ideas/", {
     ...newIdea,
-    createdAt: new Date().toISOString()
-  })
+    createdAt: new Date().toISOString(),
+  });
 
   return normalizeIdea(res.data);
 };
 
-export const deleteIdea = async  (ideaId: string):Promise<void> => {
-  await api.delete(`/ideas/${ideaId}`)
-}
+export const deleteIdea = async (ideaId: string): Promise<void> => {
+  await api.delete(`/ideas/${ideaId}`);
+};
 
-export const updateIdea = async (ideaId: string,updatedData: {
-  title: string;
-  summary: string;
-  description: string;
-  tags: string[];
-}): Promise<Idea> => {
-  const res = await api.put(`/ideas/${ideaId}`, updatedData)
+export const updateIdea = async (
+  ideaId: string,
+  updatedData: {
+    title: string;
+    summary: string;
+    description: string;
+    tags: string[];
+  },
+): Promise<Idea> => {
+  const res = await api.put(`/ideas/${ideaId}`, updatedData);
   return normalizeIdea(res.data);
-}
+};
