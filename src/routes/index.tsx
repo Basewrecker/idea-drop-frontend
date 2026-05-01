@@ -39,6 +39,15 @@ function HomePage() {
             <IdeaCard key={idea._id} idea={idea} button={false} />
           ))}
         </ul>
+
+        <div className="mt-6">
+          <a
+            href="/ideas"
+            className="w-full text-center inline-block bg-blue-500 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded-md transition-all duration-200"
+          >
+            View All Ideas
+          </a>
+        </div>
       </section>
     </div>
   );
