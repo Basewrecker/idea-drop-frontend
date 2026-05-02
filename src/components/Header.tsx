@@ -36,7 +36,7 @@ const Header = () => {
             Login
           </Link>
           <Link
-            to="/login"
+            to="/register"
             className="bg-gray-100 hover:bg-gray-200 font-medium transition-all duration-200 px-4 py-2 leading-none text-gray-800 rounded-b-md"
           >
             Register
