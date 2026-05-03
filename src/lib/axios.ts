@@ -29,10 +29,7 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (res) => res,
   async (error) => {
-    const originalRequest = error.config;
-    if (error.message?.status === 401) {
-      console.log(originalRequest);
-    }
+    return Promise.reject(error);
   },
 );
 
