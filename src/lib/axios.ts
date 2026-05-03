@@ -1,7 +1,11 @@
 import axios from "axios";
 import { getStoredAccessToken } from "./authToken";
 
-const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || "/api").trim();
+const apiBaseUrl = (
+  import.meta.env.MODE === "production"
+    ? `${import.meta.env.VITE_PRODUCTION_URL}/api`
+    : `${import.meta.env.VITE_API_URL}/api`
+).trim();
 
 const api = axios.create({
   baseURL: apiBaseUrl,
