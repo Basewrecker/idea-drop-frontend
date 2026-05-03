@@ -29,7 +29,18 @@ export const logoutUser = async () => {
   try {
     await api.post("/auth/logout");
   } catch (err: any) {
-    const message = err.response?.data?.message || "Failed to login";
+    const message = err.response?.data?.message || "Failed to logout";
     throw new Error(message);
+  }
+};
+
+export const refreshAccessToken = async () => {
+  try {
+    const res = await api.post("/auth/refresh");
+    return res.data;
+  } catch (err: any) {
+    const message =
+      err.response?.data?.message || "Failed to access refresh token";
+    throw new Error(err.message);
   }
 };

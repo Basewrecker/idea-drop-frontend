@@ -5,6 +5,7 @@ import {
   useMutation,
 } from "@tanstack/react-query";
 import { fetchIdea, deleteIdea } from "#/api/ideas";
+import { useAuth } from "#/context/AuthContext";
 
 const ideaQueryOptions = (ideaId: string) =>
   queryOptions({
@@ -24,6 +25,8 @@ function IdeaDetailsPage() {
   const { data: idea } = useSuspenseQuery(ideaQueryOptions(ideaId));
 
   const navigate = useNavigate();
+
+  const user = useAuth();
 
   const { mutateAsync: deleteMutate, isPending } = useMutation({
     mutationFn: () => deleteIdea(ideaId),
@@ -48,6 +51,7 @@ function IdeaDetailsPage() {
       </Link>
       <h2 className="text-2xl font-bold mt-2">{idea.title}</h2>
       <p className="mt-2">{idea.description}</p>
+
       <Link
         to="/ideas/$ideaId/edit"
         params={{ ideaId }}
